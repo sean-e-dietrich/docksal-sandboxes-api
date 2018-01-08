@@ -3,6 +3,7 @@
   "description": "Let People Interact with Remote Docksal Server",
   "logo": "https://docksal.io/img/docksald.png",
   "repository": "https://github.com/sean-e-dietrich/docksal-sandboxes-api",
+  "image": "heroku/nodejs",
   "keywords": ["node", "docksal"],
   "scripts": {
     "postdeploy": "bundle exec rake bootstrap"

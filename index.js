@@ -2,7 +2,7 @@ var http = require('http');
 var async = require('async');
 require('dotenv').load();
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000;
 const NAME_LENGTH = process.env.NAME_LENGTH || 30;
 
 var docksalDomain = process.env.DOCKSAL_DOMAIN;
