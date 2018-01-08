@@ -1,0 +1,22 @@
+{
+  "name": "docksal_sandbox",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@slack/client": "^3.15.0",
+    "async": "^2.6.0",
+    "bitbucket-webhook-handler": "git+https://github.com/otarim/bitbucket-webhook-handler.git",
+    "dotenv": "^4.0.0",
+    "github": "^13.1.0",
+    "github-webhook-handler": "^0.7.1",
+    "md5": "^2.2.1",
+    "node-bitbucket-api": "git+https://bitbucket.org/sean-e-dietrich/node-bitbucket-api.git",
+    "ssh2": "^0.5.5"
+  }
+}
