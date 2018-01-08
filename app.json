@@ -35,14 +35,14 @@
       "required": true
     },
     "SLACK_URL": {
-      "description": "The Slack Incoming Webhook URL used for posting.",
+      "description": "The Slack Incoming Webhook URL used for posting."
     },
     "SLACK_USER": {
       "description": "The Slack User account to post messages as.",
       "value": "CI Agent"
     },
     "SLACK_CHANNEL": {
-      "description": "The Slack Channel to post messages to.",
+      "description": "The Slack Channel to post messages to."
     },
     "SLACK_ICON": {
       "description": "The Slack Icon to use for messages.",
@@ -53,13 +53,13 @@
       "generator": "secret"
     },
     "GITHUB_TOKEN": {
-      "description": "A Github Token that has access to the repositories and can post to the Pull Requests.",
+      "description": "A Github Token that has access to the repositories and can post to the Pull Requests."
     },
     "BITBUCKET_USER": {
-      "description": "The Bitbucket Username that has access to the repositories.",
+      "description": "The Bitbucket Username that has access to the repositories."
     },
     "BITBUCKET_PASS": {
-      "description": "The Bitbucket Username's Password. Use an app password instead of the account password.",
+      "description": "The Bitbucket Username's Password. Use an app password instead of the account password."
     }
   }
 }
