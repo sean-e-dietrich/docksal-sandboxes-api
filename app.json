@@ -1,0 +1,65 @@
+{
+  "name": "Docksal Sandbox API",
+  "description": "Let People Interact with Remote Docksal Server",
+  "logo": "https://docksal.io/img/docksald.png",
+  "repository": "https://github.com/sean-e-dietrich/docksal-sandboxes-api",
+  "keywords": ["node", "docksal"],
+  "scripts": {
+    "postdeploy": "bundle exec rake bootstrap"
+  },
+  "env": {
+    "DOCKSAL_DOMAIN": {
+      "description": "Your Slack's subdomain (**this**.slack.com)",
+      "required": true
+    },
+    "BUILD_DIRECTORY": {
+      "description": "Your Slack's subdomain (**this**.slack.com)",
+      "required": true
+    },
+    "DOCKSAL_REMOTE_HOST": {
+      "description": "Your Slack's subdomain (**this**.slack.com)",
+      "required": true
+    },
+    "DOCKSAL_REMOTE_PORT": {
+      "description": "Your Slack's subdomain (**this**.slack.com)",
+      "value": "22",
+      "required": true
+    },
+    "DOCKSAL_REMOTE_USER": {
+      "description": "Your Slack's subdomain (**this**.slack.com)",
+      "required": true
+    },
+    "DOCKSAL_REMOTE_KEY": {
+      "description": "Your Slack's subdomain (**this**.slack.com)",
+      "required": true
+    },
+    "SLACK_URL": {
+      "description": "Your Slack's subdomain (**this**.slack.com)",
+    },
+    "SLACK_USERNAME": {
+      "description": "Your Slack's subdomain (**this**.slack.com)",
+      "value": "CI Agent"
+    },
+    "SLACK_CHANNEL": {
+      "description": "Your Slack's subdomain (**this**.slack.com)",
+    },
+    "SLACK_ICON": {
+      "description": "Your Slack's subdomain (**this**.slack.com)",
+      "value": ":computer:"
+    },
+    "GITHUB_SECRET": {
+      "description": "Your Slack's subdomain (**this**.slack.com)",
+      "required": true,
+      "generator": "secret"
+    },
+    "GITHUB_TOKEN": {
+      "description": "Your Slack's subdomain (**this**.slack.com)",
+    },
+    "BITBUCKET_USER": {
+      "description": "Your Slack's subdomain (**this**.slack.com)",
+    },
+    "BITBUCKET_PASS": {
+      "description": "Your Slack's subdomain (**this**.slack.com)",
+    },
+  }
+}
