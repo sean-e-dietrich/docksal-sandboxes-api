@@ -6,7 +6,7 @@
   "image": "heroku/nodejs",
   "keywords": ["node", "docksal"],
   "scripts": {
-    "postdeploy": "bundle exec rake bootstrap"
+    "postdeploy": "npm install"
   },
   "env": {
     "DOCKSAL_DOMAIN": {
