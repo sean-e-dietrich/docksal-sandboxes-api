@@ -49,8 +49,7 @@
       "value": ":computer:"
     },
     "GITHUB_SECRET": {
-      "description": "The Github Webhook Secret.",
-      "generator": "secret"
+      "description": "The Github Webhook Secret."
     },
     "GITHUB_TOKEN": {
       "description": "A Github Token that has access to the repositories and can post to the Pull Requests."
