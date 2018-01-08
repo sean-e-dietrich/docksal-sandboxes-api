@@ -5,14 +5,34 @@ require('dotenv').load();
 const PORT = process.env.PORT || 5000;
 const NAME_LENGTH = process.env.NAME_LENGTH || 30;
 
-var docksalDomain = process.env.DOCKSAL_DOMAIN;
-var buildDirectory = process.env.BUILD_DIRECTORY;
+// Github Configuration
+const GITHUB_SECRET = process.env.GITHUB_SECRET || false;
+const GITHUB_TOKEN = process.env.GITHUB_TOKEN || false;
+
+// Bitbucket Configuration
+const BITBUCKET_USER = process.env.BITBUCKET_USER || false;
+const BITBUCKET_PASS = process.env.BITBUCKET_PASS || false;
+
+// Slack Configuration
+const SLACK_URL = process.env.SLACK_URL || false;
+const SLACK_USER = process.env.SLACK_USER || 'CI Agent';
+const SLACK_ICON = process.env.SLACK_ICON || ':computer:';
+const SLACK_CHANNEL = process.env.SLACK_CHANNEL || false;
+
+// Remote Docksal Configuration
+const docksalDomain = process.env.DOCKSAL_DOMAIN || false;
+const buildDirectory = process.env.BUILD_DIRECTORY || "/home/ubuntu/builds";
+const DOCKSAL_REMOTE_HOST = process.env.DOCKSAL_REMOTE_HOST || false;
+const DOCSKAL_REMOTE_PORT = process.env.DOCKSAL_REMOTE_PORT || 22;
+const DOCKSAL_REMOTE_USER = process.env.DOCKSAL_REMOTE_USER || 'ubuntu';
+const DOCKSAL_REMOTE_KEY = process.env.DOCKSAL_REMOTE_KEY || false;
+
 
 /**
  * Github Event Listener
  */
 var createGitHubHandler = require('github-webhook-handler');
-var gitHubHandler = createGitHubHandler({ path: '/webhook', secret: process.env.GITHUB_SECRET });
+var gitHubHandler = createGitHubHandler({ path: '/webhook', secret: GITHUB_SECRET });
 
 /**
  * BitBucket Event Listener
@@ -29,9 +49,14 @@ http.createServer(function (req, res) {
   }
   // Github Webhook
   else if((req.headers['user-agent']).search('GitHub-Hookshot') != -1) {
-    gitHubHandler(req, res, function (err) {
+    if(GITHUB_SECRET == false){
+      res.statusCode = 404;
+      res.end('GITHUB_SECRET not set');
+    }else {
+      gitHubHandler(req, res, function (err) {
 
-    })
+      })
+    }
   }
   // Send 404
   else {
@@ -278,10 +303,10 @@ function ssh_cmd(cmd, callback) {
       });
     });
   }).connect({
-    host: process.env.DOCKSAL_REMOTE_HOST,
-    port: process.env.DOCKSAL_REMOTE_PORT,
-    username: process.env.DOCKSAL_REMOTE_USER,
-    privateKey: require('fs').readFileSync(process.env.DOCKSAL_REMOTE_KEY)
+    host: DOCKSAL_REMOTE_HOST,
+    port: DOCSKAL_REMOTE_PORT,
+    username: DOCKSAL_REMOTE_USER,
+    privateKey: DOCKSAL_REMOTE_KEY
   });
 }
 
@@ -290,12 +315,15 @@ function ssh_cmd(cmd, callback) {
  * @param msg
  */
 function slack_post(msg) {
+  if (SLACK_URL == false || SLACK_CHANNEL == false || msg == ""){
+    return;
+  }
+
   const { IncomingWebhook } = require('@slack/client');
-  const url = process.env.SLACK_URL;
-  const webhook = new IncomingWebhook(url, {
-    username: process.env.SLACK_USERNAME,
-    iconEmoji: process.env.SLACK_ICON,
-    channel: process.env.SLACK_CHANNEL
+  const webhook = new IncomingWebhook(SLACK_URL, {
+    username: SLACK_USER,
+    iconEmoji: SLACK_ICON,
+    channel: SLACK_CHANNEL
   });
 
   // Send simple text to the webhook channel
@@ -311,6 +339,10 @@ function slack_post(msg) {
  * @param comment
  */
 function github_post(comment) {
+  if(GITHUB_TOKEN == false){
+    return;
+  }
+
   var GitHubApi = require('github');
 
   var github = new GitHubApi({
@@ -321,7 +353,7 @@ function github_post(comment) {
   // @Todo: Otherways of authenticating
   github.authenticate({
     type: 'token',
-    token: process.env.GITHUB_TOKEN
+    token: GITHUB_TOKEN
   });
 
   github.issues.createComment({
@@ -337,8 +369,12 @@ function github_post(comment) {
  * @param comment
  */
 function bitbucket_post(comment) {
+  if (BITBUCKET_USER == false || BITBUCKET_PASS == false){
+    return;
+  }
+
   var bitbucket = require('bitbucket-api');
-  var credentials = {username: process.env.BITBUCKET_USER, password: process.env.BITBUCKET_PASS};
+  var credentials = {username: BITBUCKET_USER, password: BITBUCKET_PASS};
   var client = bitbucket.createClient(credentials);
   var repository = client.getRepository({slug: comment.repo, owner: comment.owner}, function (err, repo) {
     if (err) throw err;
